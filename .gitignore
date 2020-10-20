@@ -1,0 +1,6 @@
+# Ignore Netbeans stuff
+/build
+/nbproject
+/test
+build.xml
+manifest.mf
