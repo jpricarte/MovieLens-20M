@@ -3,25 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fileStructs;
+package csvReader.structs;
 
 import java.security.Timestamp;
 
 /**
  *
- * @author pujol
+ * @author guibgoulart, jpricarte
  */
 public class Rating {
     // userId, movieId, rating, timestamp
     protected int userId;
+    protected int movieId;
     protected double rating;
-    protected Timestamp timestamp;
+    protected String timestamp;
 
-    public Rating(int userId, double rating, Timestamp timestamp) {
+    //Constructor
+    public Rating(int userId, int movieId, double rating, String timestamp) {
         this.userId = userId;
+        this.movieId = movieId;
         this.rating = rating;
         this.timestamp = timestamp;
     }
+
+    // Getters n Setters
 
     public int getUserId() {
         return userId;
@@ -29,6 +34,14 @@ public class Rating {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
     }
 
     public double getRating() {
@@ -39,13 +52,15 @@ public class Rating {
         this.rating = rating;
     }
 
-    public Timestamp getTimestamp() {
+    public String getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
+
+    // Override hashCode n equals
 
     @Override
     public int hashCode() {

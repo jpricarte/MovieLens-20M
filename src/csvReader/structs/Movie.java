@@ -3,25 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package fileStructs;
+package csvReader.structs;
 
 import java.util.List;
 
 /**
  *
- * @author pujol
+ * @author guibgoulart, jpricarte
  */
 public class Movie {
+
     // "movieId","title","genres"
     protected int movieId;
     protected String title;
     protected List<String> genres;
 
+    // Constructor
     public Movie(int movieId, String title, List<String> genres) {
         this.movieId = movieId;
         this.title = title;
         this.genres = genres;
     }
+
+    // Getters n Setters
 
     public int getMovieId() {
         return movieId;
