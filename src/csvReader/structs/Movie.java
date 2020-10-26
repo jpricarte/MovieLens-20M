@@ -6,6 +6,7 @@
 package csvReader.structs;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -50,6 +51,5 @@ public class Movie {
     public void setGenres(List<String> genres) {
         this.genres = genres;
     }
-    
-    
+
 }
