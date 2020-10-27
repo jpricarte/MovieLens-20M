@@ -16,14 +16,12 @@ public class Rating {
     protected int userId;
     protected int movieId;
     protected double rating;
-    protected String timestamp;
 
     //Constructor
-    public Rating(int userId, int movieId, double rating, String timestamp) {
+    public Rating(int userId, int movieId, double rating) {
         this.userId = userId;
         this.movieId = movieId;
         this.rating = rating;
-        this.timestamp = timestamp;
     }
 
     // Getters n Setters
@@ -50,40 +48,5 @@ public class Rating {
 
     public void setRating(double rating) {
         this.rating = rating;
-    }
-
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    // Override hashCode n equals
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + this.userId;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Rating other = (Rating) obj;
-        if (this.userId != other.userId) {
-            return false;
-        }
-        return true;
     }
 }

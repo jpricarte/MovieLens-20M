@@ -24,18 +24,25 @@ import java.util.LinkedList;
 public class Main {
     public static void main(String args[]) {
         LinkedList<Movie> movies = Parser.movieParser("movie.csv");
-        LinkedList<Rating> ratings = Parser.ratingParser("minirating.csv");
+        LinkedList<Rating> ratings = Parser.ratingParser("rating.csv");
 
+        System.out.println("tudo lido");
 
         // Criar uma função pra fazer isso, mas a partir daqui populamos a tabela Hash
         HashTable<MovieNode> movieHashTable = new HashTable<MovieNode>(32749);
         for (var movie : movies) {
             movieHashTable.insert(new MovieNode(movie.getMovieId(), movie.getTitle(), movie.getGenres()));
         }
+        // Remove a referencia pra lista e o garbage collector faz o resto
+        movies = null;
+
+        // Insere um novo rate no filme e recalcula a média
         for (var rate : ratings) {
             movieHashTable.find(rate.getMovieId()).newRating(rate.getRating());
             movieHashTable.find(rate.getMovieId()).updateRatingAverage();
         }
+        // Remove a referencia pra lista e o garbage collector faz o resto
+        ratings = null;
 
         // Pega nota media de Toy Story (1995)
         System.out.println(movieHashTable.find(1).getRatingAverage());

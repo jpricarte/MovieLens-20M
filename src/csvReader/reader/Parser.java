@@ -60,7 +60,7 @@ public class Parser {
                 int movieId = Integer.parseInt(list[1]);
                 double rating  = Double.parseDouble(list[2]);
 
-                ratingList.add(new Rating(userId, movieId, rating, list[3]));
+                ratingList.add(new Rating(userId, movieId, rating));
             }
 
         } catch (IOException e) {
