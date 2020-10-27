@@ -1,0 +1,2 @@
+Deixar para calcular a média quando for buscar o filme pela 1a vez, pois a operação é mto custosa
+Deixar pra carregar o rating por último, salvando direto os valores nas estruturas de User e Movie

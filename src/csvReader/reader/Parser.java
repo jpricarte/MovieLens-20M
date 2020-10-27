@@ -9,6 +9,8 @@ package csvReader.reader;
 import csvReader.structs.Movie;
 import csvReader.structs.Rating;
 import csvReader.structs.Tag;
+import structs.hashTable.HashTable;
+import structs.hashTable.MovieNode;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,29 +47,35 @@ public class Parser {
         return m;
     }
 
-    public static LinkedList<Rating> ratingParser(String filename) {
+    public static void ratingParser(String filename, HashTable movies) {
         File file = new File(filename);
-        LinkedList<Rating> ratingList = new LinkedList<Rating>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+
+            int perc = 0; // Só pra fazer uma loading bar, tirar na versão final
 
             //Inicia e ignora 1a linha
             String buff = br.readLine();
             while((buff = br.readLine()) != null){
+                perc++;
                 String[] list = buff.split(",");
 
                 int userId = Integer.parseInt(list[0]);
                 int movieId = Integer.parseInt(list[1]);
                 double rating  = Double.parseDouble(list[2]);
 
-                ratingList.add(new Rating(userId, movieId, rating));
+                ((MovieNode) movies.find(movieId)).newRating(rating);
+
+                //loading bar
+                if( (perc%2000000) == 0)
+                    System.out.print("|");
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return ratingList;
+        System.out.println();
     }
 
     public static LinkedList<Tag> tagParser(String filename) {

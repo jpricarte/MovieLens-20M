@@ -1,8 +1,9 @@
 package structs.hashTable;
 
-import java.lang.reflect.Array;
+import java.io.Serializable;
 
-public class HashTable<T extends HashObject> {
+
+public class HashTable<T extends HashObject> implements Serializable {
     private int tableSize;
     private T[] hashTable;
     private boolean[] occupied;
