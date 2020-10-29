@@ -30,12 +30,13 @@ public class Main {
         for (var movie : movies) {
             movieHashTable.insert(new MovieNode(movie.getMovieId(), movie.getTitle(), movie.getGenres()));
         }
+
+        // Criar a Trie aqui
+
         movies = null;
 
         // Criar estrutura de User e passar essa estrutura aqui
         Parser.ratingParser("rating.csv", movieHashTable);
-
-        // Aqui, salvariamos as Estruturas em disco e fariamos a nossa Trie
 
         // Pega nota media de Toy Story (1995)
         movieHashTable.find(1).updateRatingAverage();
