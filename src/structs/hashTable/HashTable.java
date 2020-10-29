@@ -2,7 +2,8 @@ package structs.hashTable;
 
 import java.io.Serializable;
 
-
+// Serializable é uma flag interface para poder gerar um arquivo binário
+// Por mais que o HashObject seja interface, tinha que colocar como superclasse
 public class HashTable<T extends HashObject> implements Serializable {
     private int tableSize;
     private T[] hashTable;
@@ -38,10 +39,10 @@ public class HashTable<T extends HashObject> implements Serializable {
     }
 
     private int generateHash(int id) {
-        return (id * 31) % tableSize;
+        return (id * 31) % this.tableSize;
     }
 
     private int generateAuxHash(int id, int actualHash) {
-        return (actualHash + (id * 37)) % tableSize;
+        return (actualHash + (id * 37)) % this.tableSize;
     }
 }

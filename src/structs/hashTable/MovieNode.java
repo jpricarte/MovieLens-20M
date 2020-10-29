@@ -10,6 +10,7 @@ public class MovieNode implements HashObject{
     private int id;
     private String movieName;
     private List<String> genres;
+    //mudar para float
     private LinkedList<Double> ratingList;
     private double ratingAverage;
 
@@ -18,14 +19,6 @@ public class MovieNode implements HashObject{
         this.movieName = movieName;
         this.genres = genres;
         this.ratingList = new LinkedList<>();
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void newRating(double rating) {
@@ -43,6 +36,14 @@ public class MovieNode implements HashObject{
     }
 
     // Getters N Setters
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getMovieName() {
         return movieName;
