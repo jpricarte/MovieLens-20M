@@ -7,12 +7,14 @@ package main;
 
 import csvReader.reader.Parser;
 import csvReader.structs.Movie;
-import csvReader.structs.Rating;
-import csvReader.structs.Tag;
 import structs.Trie.Trie;
 import structs.hashTable.HashTable;
 import structs.hashTable.MovieNode;
+import structs.userStruct.UserNode;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 
 /**
@@ -28,23 +30,28 @@ public class Main {
 
         // Criar uma função pra fazer isso, mas a partir daqui populamos a tabela Hash
         HashTable<MovieNode> movieHashTable = new HashTable<MovieNode>(32749);
-        Trie moviesTrie = new Trie();
+        HashTable<UserNode> userHashTable = new HashTable<UserNode>(200003);
+
         for (var movie : movies) {
             movieHashTable.insert(new MovieNode(movie.getMovieId(), movie.getTitle(), movie.getGenres()));
         }
 
         // Criar estrutura de User e passar essa estrutura aqui
-        Parser.ratingParser("minirating.csv", movieHashTable);
+        Parser.ratingParser("rating.csv", movieHashTable, userHashTable);
+
+        Trie moviesTrie = new Trie();
 
         // Criar a Trie aqui
         for (var movie : movies) {
             moviesTrie.insert(movie.getTitle(), movie.getMovieId());
             movieHashTable.find(movie.getMovieId()).updateRatingAverage();
+
         }
+
         movies = null;
 
         // todos filmes começando com Star Wa
-        LinkedList<Integer> l = moviesTrie.getAllMovies("Barbie");
+        LinkedList<Integer> l = moviesTrie.getAllMovies("Star Wa");
 
         for(int i: l) {
             System.out.println(movieHashTable.find(i).getMovieName() + "\t" + movieHashTable.find(i).getRatingAverage());

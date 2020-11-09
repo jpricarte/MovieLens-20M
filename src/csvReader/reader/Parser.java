@@ -7,10 +7,10 @@
 package csvReader.reader;
 
 import csvReader.structs.Movie;
-import csvReader.structs.Rating;
 import csvReader.structs.Tag;
 import structs.hashTable.HashTable;
 import structs.hashTable.MovieNode;
+import structs.userStruct.UserNode;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -47,7 +47,7 @@ public class Parser {
         return m;
     }
 
-    public static void ratingParser(String filename, HashTable movies) {
+    public static void ratingParser(String filename, HashTable<MovieNode> movies, HashTable<UserNode> users) {
         File file = new File(filename);
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -66,6 +66,15 @@ public class Parser {
                 float rating  = Float.parseFloat(list[2]);
 
                 ((MovieNode) movies.find(movieId)).newRating(rating);
+
+                try {
+                    UserNode user = users.find(userId);
+                    user.addRating(movieId, rating);
+                } catch (NullPointerException e) {
+                    users.insert(new UserNode(userId));
+                    users.find(userId).addRating(movieId, rating);
+                }
+
 
                 //loading bar
                 if( (perc%2000000) == 0)

@@ -3,10 +3,11 @@ package structs.hashTable;
 
 import csvReader.structs.Rating;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MovieNode implements HashObject{
+public class MovieNode implements HashObject {
     private int id;
     private String movieName;
     private List<String> genres;
@@ -40,10 +41,6 @@ public class MovieNode implements HashObject{
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getMovieName() {
         return movieName;
     }
@@ -56,23 +53,11 @@ public class MovieNode implements HashObject{
         return genres;
     }
 
-    public void setGenres(LinkedList<String> genres) {
-        this.genres = genres;
-    }
-
     public LinkedList<Float> getRatingList() {
         return ratingList;
     }
 
-    public void setRatingList(LinkedList<Float> ratingList) {
-        this.ratingList = ratingList;
-    }
-
     public float getRatingAverage() {
         return ratingAverage;
-    }
-
-    public void setRatingAverage(float ratingAverage) {
-        this.ratingAverage = ratingAverage;
     }
 }

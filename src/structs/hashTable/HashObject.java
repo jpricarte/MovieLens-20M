@@ -1,5 +1,7 @@
 package structs.hashTable;
 
-public interface HashObject {
+import java.io.Serializable;
+
+public interface HashObject extends Serializable {
     int getId();
 }

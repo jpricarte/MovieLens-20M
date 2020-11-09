@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 // Serializable é uma flag interface para poder gerar um arquivo binário
 // Por mais que o HashObject seja interface, tinha que colocar como superclasse
-public class HashTable<T extends HashObject> implements Serializable {
+public class HashTable<T extends HashObject> {
     private int tableSize;
     private T[] hashTable;
     private boolean[] occupied;
