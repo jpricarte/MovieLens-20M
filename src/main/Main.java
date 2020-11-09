@@ -34,7 +34,7 @@ public class Main {
         }
 
         // Criar estrutura de User e passar essa estrutura aqui
-        Parser.ratingParser("minirating.csv", movieHashTable);
+        Parser.ratingParser("rating.csv", movieHashTable);
 
         // Criar a Trie aqui
         for (var movie : movies) {

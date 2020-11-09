@@ -10,9 +10,8 @@ public class MovieNode implements HashObject{
     private int id;
     private String movieName;
     private List<String> genres;
-    //mudar para float
-    private LinkedList<Double> ratingList;
-    private double ratingAverage;
+    private LinkedList<Float> ratingList;
+    private float ratingAverage;
 
     public MovieNode(int movieId, String movieName, List<String> genres) {
         this.id = movieId;
@@ -21,12 +20,12 @@ public class MovieNode implements HashObject{
         this.ratingList = new LinkedList<>();
     }
 
-    public void newRating(double rating) {
+    public void newRating(float rating) {
         ratingList.add(rating);
     }
 
     public double updateRatingAverage() {
-        double newAverage = 0;
+        float newAverage = 0;
         for (var rating : this.ratingList) {
             newAverage += rating;
         }
@@ -61,19 +60,19 @@ public class MovieNode implements HashObject{
         this.genres = genres;
     }
 
-    public LinkedList<Double> getRatingList() {
+    public LinkedList<Float> getRatingList() {
         return ratingList;
     }
 
-    public void setRatingList(LinkedList<Double> ratingList) {
+    public void setRatingList(LinkedList<Float> ratingList) {
         this.ratingList = ratingList;
     }
 
-    public double getRatingAverage() {
+    public float getRatingAverage() {
         return ratingAverage;
     }
 
-    public void setRatingAverage(double ratingAverage) {
+    public void setRatingAverage(float ratingAverage) {
         this.ratingAverage = ratingAverage;
     }
 }

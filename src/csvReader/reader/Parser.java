@@ -63,7 +63,7 @@ public class Parser {
 
                 int userId = Integer.parseInt(list[0]);
                 int movieId = Integer.parseInt(list[1]);
-                double rating  = Double.parseDouble(list[2]);
+                float rating  = Float.parseFloat(list[2]);
 
                 ((MovieNode) movies.find(movieId)).newRating(rating);
 
