@@ -34,7 +34,7 @@ public class Main {
         }
 
         // Criar estrutura de User e passar essa estrutura aqui
-        Parser.ratingParser("rating.csv", movieHashTable);
+        Parser.ratingParser("minirating.csv", movieHashTable);
 
         // Criar a Trie aqui
         for (var movie : movies) {
@@ -44,7 +44,7 @@ public class Main {
         movies = null;
 
         // todos filmes começando com Star Wa
-        LinkedList<Integer> l = moviesTrie.getAllMovies("João Comba");
+        LinkedList<Integer> l = moviesTrie.getAllMovies("Barbie");
 
         for(int i: l) {
             System.out.println(movieHashTable.find(i).getMovieName() + "\t" + movieHashTable.find(i).getRatingAverage());
