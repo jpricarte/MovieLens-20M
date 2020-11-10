@@ -26,36 +26,62 @@ import java.util.LinkedList;
 
 public class Main {
     public static void main(String args[]) {
+        System.out.println("go");
         LinkedList<Movie> movies = Parser.movieParser("movie.csv");
 
         // Criar uma função pra fazer isso, mas a partir daqui populamos a tabela Hash
         HashTable<MovieNode> movieHashTable = new HashTable<MovieNode>(32749);
-        HashTable<UserNode> userHashTable = new HashTable<UserNode>(200003);
+        Trie moviesTrie = new Trie();
 
         for (var movie : movies) {
             movieHashTable.insert(new MovieNode(movie.getMovieId(), movie.getTitle(), movie.getGenres()));
-        }
-
-        // Criar estrutura de User e passar essa estrutura aqui
-        Parser.ratingParser("rating.csv", movieHashTable, userHashTable);
-
-        Trie moviesTrie = new Trie();
-
-        // Criar a Trie aqui
-        for (var movie : movies) {
             moviesTrie.insert(movie.getTitle(), movie.getMovieId());
-            movieHashTable.find(movie.getMovieId()).updateRatingAverage();
-
         }
 
         movies = null;
 
-        // todos filmes começando com Star Wa
-        LinkedList<Integer> l = moviesTrie.getAllMovies("Star Wa");
-
-        for(int i: l) {
-            System.out.println(movieHashTable.find(i).getMovieName() + "\t" + movieHashTable.find(i).getRatingAverage());
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./movieTrie.dat"));){
+            oos.writeObject(moviesTrie);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            moviesTrie = null;
         }
+
+
+
+        HashTable<UserNode> userHashTable = new HashTable<UserNode>(150001);
+        // Criar estrutura de User e passar essa estrutura aqui
+        Parser.ratingParser("rating.csv", movieHashTable, userHashTable);
+
+        System.out.println("Fim do parse");
+
+//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./movieHashTable.dat"));){
+//            oos.writeObject(movieHashTable);
+//            oos.flush();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            movieHashTable = null;
+//        }
+//
+//        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("./userHashTable.dat"));){
+//            oos.writeObject(userHashTable);
+//            oos.flush();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            userHashTable = null;
+//        }
+
+
+//        // todos filmes começando com Star Wa
+//        LinkedList<Integer> l = moviesTrie.getAllMovies("Star Wa");
+//
+//        for(int i: l) {
+//            System.out.println(movieHashTable.find(i).getMovieName() + "\t" + movieHashTable.find(i).getRatingAverage());
+//        }
 
     }
 }

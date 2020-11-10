@@ -1,8 +1,9 @@
 package structs.Trie;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Trie{
+public class Trie implements Serializable {
     private MovieNode root;
 
     public Trie() {

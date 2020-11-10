@@ -1,9 +1,10 @@
 package structs.Trie;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.LinkedList;
 
-public class MovieNode implements TrieObject {
+public class MovieNode implements TrieObject, Serializable {
     private char c;
     private MovieNode children[];
     private boolean isLeaf;
