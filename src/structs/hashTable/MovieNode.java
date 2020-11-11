@@ -51,6 +51,13 @@ public class MovieNode implements HashObject {
         return genres;
     }
 
+    public int getNumOfReviews() {
+        return numOfReviews;
+    }
+
+    public void setNumOfReviews(int numOfReviews) {
+        this.numOfReviews = numOfReviews;
+    }
 
     public float getRatingAverage() {
         return ratingAverage;

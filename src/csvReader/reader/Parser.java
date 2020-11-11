@@ -10,7 +10,7 @@ import csvReader.structs.Movie;
 import csvReader.structs.Tag;
 import structs.hashTable.HashTable;
 import structs.hashTable.MovieNode;
-import structs.userStruct.UserNode;
+import structs.hashTable.UserNode;
 
 import java.io.BufferedReader;
 import java.io.File;
