@@ -1,12 +1,10 @@
-package structs.Trie;
+package structs.MovieTrie;
 
-import csvReader.structs.Movie;
-
-import java.util.List;
+import java.util.LinkedList;
 
 public interface TrieObject {
 //    public ArvoreTrie popularTrie(List<Movie> movieList);
-    Object[] getChildren();
+    LinkedList<MovieNode> getChildren();
     boolean isLeaf();
     void setLeaf(boolean leaf);
 }

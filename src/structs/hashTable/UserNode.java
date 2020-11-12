@@ -1,8 +1,7 @@
-package structs.userStruct;
+package structs.hashTable;
 
 import structs.hashTable.HashObject;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 
 public class UserNode implements HashObject {

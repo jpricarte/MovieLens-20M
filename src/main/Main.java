@@ -5,16 +5,14 @@
  */
 package main;
 
+import Screen.MainScreen;
 import csvReader.reader.Parser;
 import csvReader.structs.Movie;
-import structs.Trie.Trie;
+import structs.MovieTrie.Trie;
 import structs.hashTable.HashTable;
 import structs.hashTable.MovieNode;
-import structs.userStruct.UserNode;
+import structs.hashTable.UserNode;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.LinkedList;
 
 /**
@@ -30,28 +28,24 @@ public class Main {
 
         // Criar uma função pra fazer isso, mas a partir daqui populamos a tabela Hash
         HashTable<MovieNode> movieHashTable = new HashTable<MovieNode>(32749);
-        HashTable<UserNode> userHashTable = new HashTable<UserNode>(200003);
+        Trie moviesTrie = new Trie();
 
         for (var movie : movies) {
             movieHashTable.insert(new MovieNode(movie.getMovieId(), movie.getTitle(), movie.getGenres()));
-        }
-
-        // Criar estrutura de User e passar essa estrutura aqui
-        Parser.ratingParser("rating.csv", movieHashTable, userHashTable);
-
-        Trie moviesTrie = new Trie();
-
-        // Criar a Trie aqui
-        for (var movie : movies) {
             moviesTrie.insert(movie.getTitle(), movie.getMovieId());
-            movieHashTable.find(movie.getMovieId()).updateRatingAverage();
-
         }
-
         movies = null;
 
+        HashTable<UserNode> userHashTable = new HashTable<UserNode>(150001);
+        // Criar estrutura de User e passar essa estrutura aqui
+        Parser.ratingParser("minirating.csv", movieHashTable, userHashTable);
+
+        System.out.println("Fim do parse");
+
+        System.out.println(moviesTrie.getMovie("Lives of a Bengal Lancer, The (1935)"));
+
         // todos filmes começando com Star Wa
-        LinkedList<Integer> l = moviesTrie.getAllMovies("Star Wa");
+        LinkedList<Integer> l = moviesTrie.getAllMovies("Lord of");
 
         for(int i: l) {
             System.out.println(movieHashTable.find(i).getMovieName() + "\t" + movieHashTable.find(i).getRatingAverage());
