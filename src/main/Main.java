@@ -5,10 +5,9 @@
  */
 package main;
 
-import Screen.MainScreen;
 import csvReader.reader.Parser;
 import csvReader.structs.Movie;
-import structs.MovieTrie.Trie;
+import structs.MovieTrie.MovieTrie;
 import structs.hashTable.HashTable;
 import structs.hashTable.MovieNode;
 import structs.hashTable.UserNode;
@@ -28,7 +27,7 @@ public class Main {
 
         // Criar uma função pra fazer isso, mas a partir daqui populamos a tabela Hash
         HashTable<MovieNode> movieHashTable = new HashTable<MovieNode>(32749);
-        Trie moviesTrie = new Trie();
+        MovieTrie moviesTrie = new MovieTrie();
 
         for (var movie : movies) {
             movieHashTable.insert(new MovieNode(movie.getMovieId(), movie.getTitle(), movie.getGenres()));

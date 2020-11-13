@@ -3,10 +3,10 @@ package structs.MovieTrie;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Trie implements Serializable {
+public class MovieTrie implements Serializable {
     private MovieNode root;
 
-    public Trie() {
+    public MovieTrie() {
         this.root = new MovieNode();
     }
 
