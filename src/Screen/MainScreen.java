@@ -4,6 +4,7 @@ import csvReader.reader.Parser;
 import csvReader.structs.Movie;
 import csvReader.structs.Tag;
 import structs.MovieTrie.MovieTrie;
+import structs.TagTrie.TagNode;
 import structs.TagTrie.TagTrie;
 import structs.hashTable.HashTable;
 import structs.hashTable.MovieNode;
@@ -19,11 +20,17 @@ public class MainScreen {
     private JPanel panel1;
     private JButton searchPrefixButton;
     private JButton searchMovieButton;
-    private JTextArea resultTextArea;
-    private JTabbedPane tabbedPane1;
+    private JTextArea moviesByNameResultArea;
+    private JTabbedPane tabs;
     private JButton searchUserRatesButton;
     private JTextField userIdTextField;
-    private JTextArea resultRateArea;
+    private JTextArea moviesByUserResultArea;
+    private JPanel searchUserIdTab;
+    private JPanel searchMovieTab;
+    private JPanel seachTagTab;
+    private JTextField tagsTextField;
+    private JButton searchTagsButton;
+    private JTextArea moviesByTagsResultArea;
 
     static HashTable<MovieNode> movieHashTable;
     static MovieTrie moviesTrie;
@@ -32,24 +39,24 @@ public class MainScreen {
 
     // QUERIES
     private void searchMovieQuery() {
-        resultTextArea.setText("");
+        moviesByNameResultArea.setText("");
 
         // Procura o id de um filme que tenha exatamente o mesmo nome que o inserido e imprime informações
         int id = moviesTrie.getMovie(movieTextField.getText());
         if (id>0) {
             MovieNode m = movieHashTable.find(id);
-            resultTextArea.append("Filme: " + m.getMovieName() +
+            moviesByNameResultArea.append("Filme: " + m.getMovieName() +
                     "\n\t Nota: " + m.getRatingAverage() +
                     "\n\t Nº de Avaliações: " + m.getNumOfReviews() +
                     "\n\t Generos: ");
 
             for (var genre : m.getGenres()) {
-                resultTextArea.append(genre + "; ");
+                moviesByNameResultArea.append(genre + "; ");
             }
-            resultTextArea.append("\n");
+            moviesByNameResultArea.append("\n");
         }
         else
-            resultTextArea.setText("Filme não encontrado");
+            moviesByNameResultArea.setText("Filme não encontrado");
 
         movieTextField.setText("");
     }
@@ -59,27 +66,26 @@ public class MainScreen {
         // Pega Ids dos filmes
         LinkedList<Integer> ids = moviesTrie.getAllMovies(movieTextField.getText());
 
-
-        resultTextArea.setText("");
+        moviesByNameResultArea.setText("");
 
         // Se não houver filme, erro
         if (ids == null)
-            resultTextArea.setText("Nenhum Filme Encontrado");
+            moviesByNameResultArea.setText("Nenhum Filme Encontrado");
 
         // Senão, imprime cada filme com seus dados
         // TODO: Ordenar por nota ou popularidade (nº de reviews)
         else for(var id : ids) {
                 MovieNode m = movieHashTable.find(id);
-                resultTextArea.append("Filme: " + m.getMovieName() +
+                moviesByNameResultArea.append("Filme: " + m.getMovieName() +
                         "\n\t Nota: " + m.getRatingAverage() +
                         "\n\t Nº de Avaliações: " + m.getNumOfReviews() +
                         "\n\t Generos: ");
 
                 // Imprime generos separados por ;
                 for (var genre : m.getGenres()) {
-                    resultTextArea.append(genre + "; ");
+                    moviesByNameResultArea.append(genre + "; ");
                 }
-                resultTextArea.append("\n");
+                moviesByNameResultArea.append("\n");
             }
 
         movieTextField.setText("");
@@ -87,7 +93,7 @@ public class MainScreen {
 
     private void searchUserByIdQuery() {
         // Limpa área de texto
-        resultRateArea.setText("");
+        moviesByUserResultArea.setText("");
 
         // Busca usuário
         try {
@@ -101,18 +107,64 @@ public class MainScreen {
                 // Pega valores do filme e imprime
                 MovieNode m = movieHashTable.find(movieId);
 
-                resultRateArea.append(m.getMovieName()+
+                moviesByUserResultArea.append(m.getMovieName()+
                         "\n\t Nota: " + movieRate +
                         "\n\t Média: " + m.getRatingAverage() +
                         "\n\t Outras " + m.getNumOfReviews() + " pessoas avaliaram esse filme." +
                         "\n\n");
             }
         } catch (NumberFormatException e) {
-            resultRateArea.setText(e.getMessage());
+            moviesByUserResultArea.setText(e.getMessage());
         }
 
-
         userIdTextField.setText("");
+    }
+
+    private void searchByTagsQuery() {
+        moviesByTagsResultArea.setText("");
+
+        String[] tags = tagsTextField.getText().split(",");
+        LinkedList<Integer> moviesId = new LinkedList<Integer>();
+        for (var tag : tags) {
+             LinkedList<Integer> auxList = tagsTrie.getMovies(tag);
+
+             for (int movieId : auxList) {
+                 if(!moviesId.contains(movieId)) {
+                     MovieNode m = movieHashTable.find(movieId);
+                     moviesId.addLast(movieId);
+                     moviesByTagsResultArea.append(m.getMovieName() + "\n\n");
+                     }
+             }
+        }
+    }
+
+    private void searchByTagsIntersectionQuery() {
+        moviesByTagsResultArea.setText("");
+
+        String[] tags = tagsTextField.getText().split(",");
+        LinkedList<Integer> moviesId = new LinkedList<Integer>();
+
+        LinkedList<Integer> auxList = tagsTrie.getMovies(tags[0]);
+
+        for (int movieId : auxList) {
+                moviesId.addLast(movieId);
+        }
+
+        for (var tag : tags) {
+            auxList = tagsTrie.getMovies(tag);
+
+            if (moviesId.size() > 0)
+                for (int movieId : moviesId) {
+                    if(!auxList.contains(movieId)) {
+                        System.out.println(auxList.contains(movieId));
+                        moviesId.removeLastOccurrence(movieId);
+                    }
+                }
+        }
+
+        for (int movieId : auxList) {
+            moviesByTagsResultArea.append(movieHashTable.find(movieId).getMovieName() + "\n\n");
+        }
     }
 
     // ACTIONS
@@ -134,6 +186,12 @@ public class MainScreen {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 searchUserByIdQuery();
+            }
+        });
+        searchTagsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                searchByTagsQuery();
             }
         });
     }
@@ -164,10 +222,6 @@ public class MainScreen {
         Parser.ratingParser("rating.csv", movieHashTable, userHashTable);
 
         System.out.println("Fim da leitura, abrindo janela...");
-
-        for (var m : tagsTrie.getMovies("torture")) {
-            System.out.println(movieHashTable.find(m).getMovieName());
-        }
 
         JFrame frame = new JFrame("MainScreen");
         frame.setContentPane(new MainScreen().panel1);
