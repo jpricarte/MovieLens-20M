@@ -96,12 +96,10 @@ public class GenreNode{
             if (movieIdList.get(i) == movieId) {
                 return false;
             }
-            // inserir filme com média 4
-            // [5, 5, 4.5, 4, 3, 2]
             float actualMovieAverage = movieHashTable.find(movieIdList.get(i)).getRatingAverage();
-            if (newMovieAverage >= actualMovieAverage) {
-                if(i==0) movieIdList.addFirst(movieId);
-                else movieIdList.add(i-1, movieId);
+
+            if (Float.compare(newMovieAverage, actualMovieAverage) >= 0) {
+                movieIdList.add(i, movieId);
                 return true;
             }
         }

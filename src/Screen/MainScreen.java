@@ -153,7 +153,7 @@ public class MainScreen {
         LinkedList<Integer> moviesIds = genreTrie.getMovies(genreTextField.getText());
 
         int numOfMovies = Integer.parseInt(numberOfMoviesTextField.getText());
-        for(int i=0; i < numOfMovies; i++) {
+        for(int i=0; i < Math.min(numOfMovies, moviesIds.size()); i++) {
             int movieId = moviesIds.get(i);
 
             // Pega valores do filme e imprime
@@ -243,7 +243,6 @@ public class MainScreen {
                 }
             }
         }
-
 
         movies = null;
         System.out.println("Fim da leitura, abrindo janela...");

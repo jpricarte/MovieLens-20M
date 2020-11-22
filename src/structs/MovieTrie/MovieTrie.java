@@ -3,7 +3,7 @@ package structs.MovieTrie;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-public class MovieTrie implements Serializable {
+public class MovieTrie {
     private MovieNode root;
 
     public MovieTrie() {

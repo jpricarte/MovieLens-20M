@@ -3,7 +3,7 @@ package structs.MovieTrie;
 import java.io.Serializable;
 import java.util.LinkedList;
 
-public class MovieNode implements Serializable {
+public class MovieNode {
     private char c;
     private LinkedList<MovieNode> children;
     private boolean isLeaf;
