@@ -89,9 +89,20 @@ public class GenreNode{
             movieIdList.addFirst(movieId);
             return true;
         }
-        for (int id : movieIdList) {
-            if (id == movieId) {
+
+        float newMovieAverage = movieHashTable.find(movieId).getRatingAverage();
+
+        for (int i=0; i < movieIdList.size(); i++) {
+            if (movieIdList.get(i) == movieId) {
                 return false;
+            }
+            // inserir filme com média 4
+            // [5, 5, 4.5, 4, 3, 2]
+            float actualMovieAverage = movieHashTable.find(movieIdList.get(i)).getRatingAverage();
+            if (newMovieAverage >= actualMovieAverage) {
+                if(i==0) movieIdList.addFirst(movieId);
+                else movieIdList.add(i-1, movieId);
+                return true;
             }
         }
         movieIdList.addLast(movieId);
