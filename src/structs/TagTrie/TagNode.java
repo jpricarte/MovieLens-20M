@@ -1,5 +1,7 @@
 package structs.TagTrie;
 
+import structs.GenreTrie.GenreNode;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -97,6 +99,8 @@ public class TagNode implements Serializable {
         movieIdList.addLast(movieId);
         return true;
     }
+
+    //public void insertOrdered
 
     public char getC() {
         return c;

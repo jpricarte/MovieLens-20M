@@ -1,6 +1,6 @@
 package structs.TagTrie;
 
-import structs.MovieTrie.MovieNode;
+import structs.GenreTrie.GenreNode;
 
 import java.util.LinkedList;
 
